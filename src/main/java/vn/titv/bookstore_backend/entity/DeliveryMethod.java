@@ -7,23 +7,22 @@ import java.util.List;
 
 @Data
 @Entity
-@Table(name = "delivery_method")
+@Table(name = "deliveries")
 public class DeliveryMethod {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "deliverymethod_id")
-    private int id;
-    @Column(name = "name")
-    private String name;
-    @Column(name = "describe")
+    @Column(name = "delivery_id")
+    private int deliverymethodId;
+    @Column(name = "deliverymethod_name")
+    private String deliveryMethodName;
+    @Column(name = "describes")
     private String describe;
-    @Column(name = "fee")
-    private Double fee;
+    @Column(name = "delivery_fee")
+    private double deliveryFee;
 
-    @OneToMany(
-            mappedBy = "deliveryMethod",fetch = FetchType.LAZY,cascade = {
+    @OneToMany(mappedBy = "delivery",fetch = FetchType.LAZY, cascade = {
             CascadeType.PERSIST, CascadeType.MERGE,
-            CascadeType.DETACH,CascadeType.REFRESH
+            CascadeType.DETACH, CascadeType.REFRESH
     })
-    private List<Order> orderList;
+    private List<Order> orders;
 }

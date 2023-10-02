@@ -1,30 +1,23 @@
 package vn.titv.bookstore_backend.entity;
 
-
 import jakarta.persistence.*;
 import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "images")
-public class Image {
+@Table(name = "favorite_book")
+public class FavoriteBook {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "image_id")
-    private int imageId;
+    @Column(name = "favoritebook_id")
+    private int favoriteBookId;
 
-    @Column(name = "image_name", length = 256)
-    private String imageName;
-
-    @Column(name = "is_icon") // tiny int
-    private boolean isIcon;
-
-    @Column(name = "link")
-    private String link;
-
-    @Column(name = "image_data")
-    @Lob
-    private String imageData;
+    @ManyToOne(cascade = {
+            CascadeType.PERSIST, CascadeType.MERGE,
+            CascadeType.DETACH, CascadeType.REFRESH
+    })
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
     @ManyToOne(cascade = {
             CascadeType.PERSIST, CascadeType.MERGE,
@@ -32,4 +25,7 @@ public class Image {
     })
     @JoinColumn(name = "book_id", nullable = false)
     private Book book;
+
+
+
 }

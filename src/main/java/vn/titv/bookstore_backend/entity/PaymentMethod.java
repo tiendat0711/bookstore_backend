@@ -6,24 +6,22 @@ import lombok.Data;
 import java.util.List;
 @Data
 @Entity
-@Table(name = "payment_method")
+@Table(name = "payments")
 public class PaymentMethod {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "paymentmethod_id")
-    private int paymentmethodId;
-
-    @Column(name = "name")
-    private String name;
-    @Column(name = "describe")
+    @Column(name = "payment_id")
+    private int paymentMethodId;
+    @Column(name = "payment_name")
+    private String paymentMethodName;
+    @Column(name = "describes")
     private String describe;
-    @Column(name = "fee")
-    private Double fee;
+    @Column(name = "payment_fee")
+    private double paymentFee;
 
-    @OneToMany(
-            mappedBy = "paymentMethod",fetch = FetchType.LAZY,cascade = {
+    @OneToMany(mappedBy ="payment" ,fetch = FetchType.LAZY, cascade = {
             CascadeType.PERSIST, CascadeType.MERGE,
-            CascadeType.DETACH,CascadeType.REFRESH
+            CascadeType.DETACH, CascadeType.REFRESH
     })
-    private List<Order> orderList;
+    private List<Order> orders;
 }

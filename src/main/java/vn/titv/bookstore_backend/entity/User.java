@@ -6,68 +6,59 @@ import lombok.Data;
 import java.util.List;
 @Data
 @Entity
-@Table(name = "user")
+@Table(name = "users")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
-    private String id;
-    @Column(name = "firstName", length = 255)
-    private String firstName;
-    @Column(name = "lastName", length = 255)
+    private int userId;
+    @Column(name = "last_name")
     private String lastName;
-    @Column(name = "userName", length = 255)
-    private  String userName;
+    @Column(name = "first_name")
+    private String firstName;
+    @Column(name = "user_name")
+    private String userName;
     @Column(name = "password", length = 512)
     private String password;
-    @Column(name = "sex", length = 255)
+    @Column(name = "sex")
     private char sex;
-    @Column(name = "email", length = 255)
+    @Column(name = "email")
     private String email;
-    @Column(name = "phoneNumber", length = 255)
-    private String phoneNumer;
-    @Column(name = "buyAddress", length = 255)
+    @Column(name = "phone_number")
+    private String phoneNumber;
+    @Column(name = "buy_address")
     private String buyAddress;
-    @Column(name = "recieveAddress", length = 255)
+    @Column(name = "recieve_address")
     private String recieveAddress;
 
-
-    @OneToMany(
-            mappedBy = "user_id",fetch = FetchType.LAZY,cascade = {
-            CascadeType.PERSIST, CascadeType.MERGE,
-            CascadeType.DETACH,CascadeType.REFRESH
-    })
-    private List<Review> listReviews;
-
-
-    @OneToMany(
-            mappedBy = "user_id",fetch = FetchType.LAZY,cascade = {
-            CascadeType.PERSIST, CascadeType.MERGE,
-            CascadeType.DETACH,CascadeType.REFRESH
-    })
-    private List<Favorite> listFavorites;
-
-
-    @ManyToMany(fetch = FetchType.LAZY,cascade = {
+    @OneToMany(mappedBy = "user",fetch = FetchType.LAZY, cascade = {
             CascadeType.PERSIST, CascadeType.MERGE,
             CascadeType.DETACH, CascadeType.REFRESH
+    })
+    private List<Review> reviews;
 
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = {
+            CascadeType.PERSIST, CascadeType.MERGE,
+            CascadeType.DETACH, CascadeType.REFRESH
+    })
+    private List<FavoriteBook> favoriteBooks;
+
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {
+            CascadeType.PERSIST, CascadeType.MERGE,
+            CascadeType.DETACH, CascadeType.REFRESH
     })
     @JoinTable(
             name = "user_role",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
-    private List<Role> listRoles;
+    private List<Role> roles;
 
-
-    @OneToMany(
-            mappedBy = "user_id",fetch = FetchType.LAZY,cascade = {
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = {
             CascadeType.PERSIST, CascadeType.MERGE,
-            CascadeType.DETACH,CascadeType.REFRESH
+            CascadeType.DETACH, CascadeType.REFRESH
     })
-    private List<Order> listOrders;
-
+    private List<Order> orders;
 
 
 }

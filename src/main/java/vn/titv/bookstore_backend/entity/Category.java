@@ -5,26 +5,27 @@ import lombok.Data;
 
 import java.util.List;
 @Data
-@Table(name = "category")
+@Table(name = "categories")
+@Entity
 public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "category_id")
+    @Column(name="category_id")
     private int categoryId;
-    @Column(name = "name", length = 256)
-    private String name;
 
-    @ManyToMany(fetch = FetchType.LAZY,cascade = {
+    @Column(name = "category_name", length = 256)
+    private String categoryName;
+
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {
             CascadeType.PERSIST, CascadeType.MERGE,
-            CascadeType.DETACH, CascadeType.MERGE,
-            CascadeType.REFRESH
+            CascadeType.DETACH, CascadeType.REFRESH
     })
     @JoinTable(
-            name = "book_listcategories",
-            joinColumns = @JoinColumn(name = "categoryId"),
-            inverseJoinColumns = @JoinColumn(name = "bookId")
+            name = "book_category",
+            joinColumns = @JoinColumn(name = "category_id"),
+            inverseJoinColumns = @JoinColumn(name = "book_id")
     )
-    private List<Book>listBooks;
+    private List<Book> books;
 
 
 }

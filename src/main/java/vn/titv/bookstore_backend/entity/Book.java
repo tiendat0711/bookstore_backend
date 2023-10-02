@@ -2,84 +2,65 @@ package vn.titv.bookstore_backend.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.util.List;
 @Data
 @Entity
-@Table(name = "book")
+@Table(name = "books")
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "book_id")
-    private int bookId ;
+    private int bookId;
 
-    @Column(name = "name", length = 256)
-    private String name ;
+    @Column(name = "book_name", length = 256)
+    private String bookName;
 
-    @Column(name = "author", length = 512)
-    private String author;
+    @Column(name = "author_name", length = 512)
+    private String authorName;
 
     @Column(name = "isbn", length = 256)
-    private String ISBN ;
+    private String ISBN;
 
-    @Column(name = "describe", columnDefinition = "text")
+    @Column(name = "book_describe")
     private String describe;
 
-    @Column(name = "list_price")
+    @Column(name="list_price")
     private double listPrice;
-    @Column(name = "price")
-    private double price;
-    @Column(name = "quantity")
-    private int quantity;
-    @Column(name = "rate")
-    private double rate;
 
-    @ManyToMany(fetch = FetchType.LAZY,cascade = {
+    @Column(name="sell_price")
+    private double sellPrice;
+
+    @Column(name="quantity")
+    private int quantity;
+
+    @Column(name="rate")
+    private Double rate;
+
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {
             CascadeType.PERSIST, CascadeType.MERGE,
             CascadeType.DETACH, CascadeType.REFRESH
-
     })
     @JoinTable(
             name = "book_category",
             joinColumns = @JoinColumn(name = "book_id"),
             inverseJoinColumns = @JoinColumn(name = "category_id")
     )
-    private  List<Category> listCategories;
+    List<Category> categories;
 
-    @OneToMany(
-            mappedBy = "book",fetch = FetchType.LAZY,cascade = {
-            CascadeType.ALL
-            }
-    )
+    @OneToMany(mappedBy = "book", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    List<Image> images;
 
-    private List<Image> listImages;
+    @OneToMany(mappedBy = "book", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    List<Review> reviews;
 
-    @OneToMany(
-            mappedBy = "book",fetch = FetchType.LAZY,cascade = {
+    @OneToMany(mappedBy = "book", fetch = FetchType.LAZY, cascade = {
             CascadeType.PERSIST, CascadeType.MERGE,
-            CascadeType.DETACH,CascadeType.REFRESH
-    }
-    )
-    private List<Review> listReviews;
+            CascadeType.DETACH, CascadeType.REFRESH
+    })
+    List<OrderDetail> orderDetails;
 
-    @OneToMany(
-            mappedBy = "book",fetch = FetchType.LAZY,cascade = {
-            CascadeType.PERSIST, CascadeType.MERGE,
-            CascadeType.DETACH,CascadeType.REFRESH
-    }
-    )
-    private List<OrderDetail> listOrderDetails;
-    @OneToMany(
-            mappedBy = "book",fetch = FetchType.LAZY,cascade = {CascadeType.ALL}
-    )
-    private List<Favorite> listFavorites;
-
-
-
-
-
-
+    @OneToMany( mappedBy = "book", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    List<FavoriteBook> favoriteBooks;
 
 }

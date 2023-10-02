@@ -43,13 +43,13 @@ public class Order {
             CascadeType.PERSIST, CascadeType.MERGE,
             CascadeType.DETACH, CascadeType.REFRESH
     })
-    @JoinColumn(name = "paymentmethod_id")
-    private PaymentMethod payment;
+    @JoinColumn(name = "payment_id")
+    private Payment payment;
 
     @ManyToOne(cascade = {
             CascadeType.PERSIST, CascadeType.MERGE,
             CascadeType.DETACH, CascadeType.REFRESH
     })
-    @JoinColumn(name = "deliverymethod_id")
-    private DeliveryMethod delivery;
+    @JoinColumn(name = "delivery_id")
+    private Delivery delivery;
 }

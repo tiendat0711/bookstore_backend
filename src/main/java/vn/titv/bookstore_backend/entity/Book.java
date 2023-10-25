@@ -22,7 +22,7 @@ public class Book {
     @Column(name = "isbn", length = 256)
     private String ISBN;
 
-    @Column(name = "book_describe")
+    @Column(name = "book_description")
     private String describe;
 
     @Column(name="list_price")
